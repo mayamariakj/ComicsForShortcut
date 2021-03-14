@@ -1,19 +1,15 @@
 package com.example.comicsapp
 //https://github.com/square/okhttp/blob/master/samples/guide/src/main/java/okhttp3/recipes/kt/AsynchronousGet.kt
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.util.Log
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
-import java.io.IOException
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.*
 import kotlin.random.Random
 
 
@@ -25,20 +21,39 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setupButtons()
 
         GlobalScope.launch {
-            displayComicAndTitle(getNewestComic()!!)
-
+            if (newestComicNumber == 0){
+                displayComicAndTitle(getNewestComic()!!)
+            }
+            else{
+                displayComicAndTitle(getAComic(currentComicNumber)!!)
+            }
         }
-        // var comic2 = getAComic(comic!!.num-1
-        //  getComicFromApi()
+    }
+
+    public override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+        savedInstanceState.putInt("currentComicNumber", currentComicNumber)
+        savedInstanceState.putInt("newestComicNumber", newestComicNumber)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        currentComicNumber = savedInstanceState.getInt("currentComicNumber")
+        newestComicNumber = savedInstanceState.getInt("newestComicNumber")
+
     }
 
     private fun displayComicAndTitle(comicData: ComicData){
         runOnUiThread {
-            Picasso.get().load(comicData.img).fit().centerInside().into(mainComicImage)
+            Picasso.get().load(comicData.img).resize(mainComicImage.width, 9999).centerInside().into(
+                mainComicImage
+            )
+            text_title.text = comicData.title
+            text_info.text = comicData.alt
+
         }
     }
 
@@ -71,6 +86,9 @@ class MainActivity : AppCompatActivity() {
         button_forward.setOnClickListener(){getNextComic()}
         button_previous.setOnClickListener(){getPreviousComic()}
         button_random.setOnClickListener(){getRandomComic()}
+        button_forward_top.setOnClickListener(){getNextComic()}
+        button_previous_top.setOnClickListener(){getPreviousComic()}
+        button_random_top.setOnClickListener(){getRandomComic()}
     }
 
     fun getNewestComic(): ComicData?{
