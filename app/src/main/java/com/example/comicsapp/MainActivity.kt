@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
+import android.widget.Button
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import java.io.IOException
@@ -13,27 +14,74 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.*
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
+
+    var newestComicNumber: Int = 0
+    var currentComicNumber: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setupButtons()
+
         GlobalScope.launch {
-            var comic = getNewestComic()
-            runOnUiThread {
-                Picasso.get().load(comic!!.img).fit().centerInside().into(mainComicImage)
-                var test = 2
-            }
+            displayComicAndTitle(getNewestComic()!!)
+
         }
-       // var comic2 = getAComic(comic!!.num-1
-      //  getComicFromApi()
+        // var comic2 = getAComic(comic!!.num-1
+        //  getComicFromApi()
+    }
+
+    private fun displayComicAndTitle(comicData: ComicData){
+        runOnUiThread {
+            Picasso.get().load(comicData.img).fit().centerInside().into(mainComicImage)
+        }
+    }
+
+    private fun getNextComic(){
+        if (newestComicNumber == currentComicNumber)
+            return
+        else{
+            currentComicNumber ++
+            displayComicAndTitle(getAComic(currentComicNumber)!!)
+        }
+
+    }
+
+    private fun getPreviousComic(){
+        if (currentComicNumber == 0 )
+            return
+        else{
+            currentComicNumber --
+            displayComicAndTitle(getAComic(currentComicNumber)!!)
+        }
+
+    }
+
+    private fun getRandomComic(){
+        currentComicNumber = Random.nextInt(newestComicNumber)
+        displayComicAndTitle(getAComic(currentComicNumber)!!)
+    }
+
+    private fun setupButtons() {
+        button_forward.setOnClickListener(){getNextComic()}
+        button_previous.setOnClickListener(){getPreviousComic()}
+        button_random.setOnClickListener(){getRandomComic()}
     }
 
     fun getNewestComic(): ComicData?{
         var url: String = "https://xkcd.com/info.0.json"
-        return getComicFromApi(url)
+        var newComicData = getComicFromApi(url)
+        newestComicNumber = newComicData!!.num
+        currentComicNumber = newestComicNumber
+
+        return newComicData
     }
+
 
     fun getAComic(number: Int): ComicData?{
         var url: String = "https://xkcd.com/" + number + "/info.0.json"
