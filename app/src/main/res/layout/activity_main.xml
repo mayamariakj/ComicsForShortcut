@@ -26,11 +26,22 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/button_previous_top"
+                    android:id="@+id/button_first_top"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Previous"
+                    android:text="«"
+                    android:layout_gravity="left"
+                    />
+
+                <Button
+                    android:id="@+id/button_previous_top"
+                    android:minWidth="75dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="‹"
                     android:layout_gravity="left"
                     />
 
@@ -45,10 +56,20 @@
 
                 <Button
                     android:id="@+id/button_forward_top"
+                    android:minWidth="75dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Next"
+                    android:text="›"
+                    android:layout_gravity="right"
+                    />
+                <Button
+                    android:id="@+id/button_fastForward_top"
+                    android:minWidth="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="»"
                     android:layout_gravity="right"
                     />
             </LinearLayout>
@@ -87,11 +108,22 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/button_previous"
+                    android:id="@+id/button_first"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Previous"
+                    android:text="«"
+                    android:layout_gravity="left"
+                    />
+
+                <Button
+                    android:id="@+id/button_previous"
+                    android:minWidth="75dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="‹"
                     android:layout_gravity="left"
                     />
 
@@ -106,10 +138,20 @@
 
                 <Button
                     android:id="@+id/button_forward"
+                    android:minWidth="75dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Next"
+                    android:text="›"
+                    android:layout_gravity="right"
+                    />
+                <Button
+                    android:id="@+id/button_fastForward"
+                    android:minWidth="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="»"
                     android:layout_gravity="right"
                     />
             </LinearLayout>

@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onClickPreviousComic(){
-        if (currentComicNumber == 0 )
+        if (currentComicNumber == 1 )
             return
         else{
             currentComicNumber --
@@ -83,6 +83,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun onClickRandomComic(){
         currentComicNumber = Random.nextInt(newestComicNumber)
+        displayComicAndTitle(getAComic(currentComicNumber)!!)
+    }
+
+    private fun onClickFastForward(){
+        currentComicNumber = newestComicNumber
+        displayComicAndTitle(getAComic(currentComicNumber)!!)
+    }
+
+    private fun onClickFirst(){
+        currentComicNumber = 1
         displayComicAndTitle(getAComic(currentComicNumber)!!)
     }
 
@@ -103,6 +113,10 @@ class MainActivity : AppCompatActivity() {
         button_previous_top.setOnClickListener(){onClickPreviousComic()}
         button_random_top.setOnClickListener(){onClickRandomComic()}
         button_share.setOnClickListener(){onClickShareComic()}
+        button_fastForward_top.setOnClickListener(){onClickFastForward()}
+        button_fastForward.setOnClickListener(){onClickFastForward()}
+        button_first_top.setOnClickListener(){onClickFirst()}
+        button_first.setOnClickListener(){onClickFirst()}
     }
 
     fun getNewestComic(): ComicData?{
