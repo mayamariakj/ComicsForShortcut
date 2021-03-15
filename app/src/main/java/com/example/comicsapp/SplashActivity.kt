@@ -18,7 +18,6 @@ class SplashActivity : AppCompatActivity() {
     private  fun loadMainScreen() {
         val splashTimer = System.currentTimeMillis()
 
-
         val sleepTime = 2000 - (System.currentTimeMillis() - splashTimer)
         if (sleepTime > 0){
             Thread.sleep(sleepTime)
@@ -27,5 +26,4 @@ class SplashActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
-
 }
